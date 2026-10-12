@@ -23,3 +23,4 @@ L'application s'ouvre sur http://localhost:3000.
 
 ## Auteur
 Wajdi Hasini
+EQUIPE : Albouchi Med Amine - Aicha Menif  - Youssef Aidoudi - Ahmed Hlehli
