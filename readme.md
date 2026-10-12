@@ -46,7 +46,7 @@ L'application s'ouvre sur http://localhost:3000.
 
 **Groupe GR03EQ2**
 
-- Wajdi Hasini
+- Wajdi Hasini ( auteur )
 - Albouchi Med Amine
 - Aicha Menif
 - Youssef Aidoudi
