@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activité 3 - Composants</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <hr>
+  <div id="root2"></div>
+  <hr>
+  <div id="root3"></div>
+
+  <script type="text/babel">
+    // ---- Partie A : activité 2 réécrite avec un composant (classe) ----
+    const apprenant = {
+      nomApprenant: 'Foulen',
+      prenomApprenant: 'Ben Foulen'
+    };
+
+    class Accueil extends React.Component {
+      render() {
+        const a = this.props.apprenant;
+        return (
+          <strong>
+            Bonne découverte de React {a.nomApprenant + ' ' + a.prenomApprenant}
+          </strong>
+        );
+      }
+    }
+
+    ReactDOM.render(<Accueil apprenant={apprenant} />, document.getElementById('root'));
+
+    // ---- Partie B : composant fonctionnel Bienvenue ----
+    function BienvenueFonction(props) {
+      return <h2>Vous êtes le/la bienvenue, {props.prenom}</h2>;
+    }
+
+    const elt = <BienvenueFonction prenom="Foulen" />;
+    ReactDOM.render(elt, document.getElementById('root2'));
+
+    // ---- Partie C : la même chose convertie en classe ----
+    // 1. classe ES6 qui étend React.Component  2. méthode render()
+    // 3. corps de la fonction déplacé dans render()  4. props -> this.props
+    // 5. suppression de la fonction
+    // Remarque : le rendu est identique, fonction et classe sont deux
+    // manières équivalentes de déclarer un composant.
+    class BienvenueClasse extends React.Component {
+      render() {
+        return <h2>Vous êtes le/la bienvenue, {this.props.prenom}</h2>;
+      }
+    }
+
+    ReactDOM.render(<BienvenueClasse prenom="Foulen" />, document.getElementById('root3'));
+  </script>
+</body>
+</html>

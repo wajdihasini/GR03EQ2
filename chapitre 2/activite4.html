@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activité 4 - Stateless et Stateful</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="root2"></div>
+
+  <script type="text/babel">
+    // Composant SANS état (Stateless) : utilise uniquement this.props
+    class Bienvenue extends React.Component {
+      render() {
+        return <h1>T'es le bienvenue {this.props.saisie}!</h1>;
+      }
+    }
+
+    // Composant AVEC état (Stateful) : this.state initialisé dans le constructeur
+    class BienvenueState extends React.Component {
+      constructor(props) {
+        super(props);
+        // Extraction du prénom à partir de la prop
+        let prenom = this.props.saisie.split(" ")[0];
+        // Initialisation de l'état
+        this.state = { saisie: prenom };
+      }
+
+      render() {
+        return <h1>Bonjour {this.state.saisie}!</h1>;
+      }
+    }
+
+    ReactDOM.render(<Bienvenue saisie="Foulen Ben Foulen" />, document.getElementById('root'));
+    ReactDOM.render(<BienvenueState saisie="Foulen Ben Foulen" />, document.getElementById('root2'));
+  </script>
+</body>
+</html>

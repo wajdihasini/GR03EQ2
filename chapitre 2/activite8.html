@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activité 8 - Les cloches</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    @keyframes sonner {
+      0%   { transform: rotate(0deg); }
+      20%  { transform: rotate(-18deg); }
+      40%  { transform: rotate(18deg); }
+      60%  { transform: rotate(-12deg); }
+      80%  { transform: rotate(12deg); }
+      100% { transform: rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          msg: "Veuillez vous inscrire",
+          ins: "Inscription",
+          sonne: false   // false : cloche noire / true : cloche dorée qui sonne
+        };
+        this.audioCtx = null;
+      }
+
+      styles = { fontWeight: "bold", color: "teal" };
+
+      Changement = () => {
+        this.setState({ msg: "Suivez les màj", ins: "Déjà inscrit" });
+      }
+
+      // Son de cloche généré par le navigateur (aucun fichier audio nécessaire)
+      jouerSon = () => {
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!this.audioCtx) this.audioCtx = new AC();
+          const ctx = this.audioCtx;
+          if (ctx.state === "suspended") ctx.resume();
+
+          const t = ctx.currentTime;
+          [[880, 0.4], [1320, 0.2], [1760, 0.1]].forEach(([freq, vol]) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(vol, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(t);
+            osc.stop(t + 1.5);
+          });
+        } catch (e) {
+          console.log("Son non disponible :", e);
+        }
+      }
+
+      // Événements sur le conteneur FIXE (et non sur la cloche qui bouge)
+      survol = () => {
+        this.setState({ sonne: true });
+        this.jouerSon();
+      }
+      sortie = () => this.setState({ sonne: false });
+
+      render() {
+        // Style pour redimensionner les cloches : modifier fontSize
+        const styleCloche = {
+          display: "inline-block",
+          fontSize: "100px",
+          lineHeight: "1.2",
+          transformOrigin: "top center"
+        };
+
+        const cloche = this.state.sonne
+          ? { ...styleCloche, animation: "sonner 0.6s ease-in-out infinite" }
+          : { ...styleCloche, filter: "grayscale(1) brightness(0.3)" };
+
+        return (
+          <div>
+            <h1 style={this.styles}>{this.state.msg}</h1>
+            <button onClick={this.Changement}>{this.state.ins}</button>
+
+            <div
+              style={{ display: "inline-block", marginTop: "20px", cursor: "pointer", padding: "10px 30px" }}
+              onMouseEnter={this.survol}
+              onMouseLeave={this.sortie}
+            >
+              <span style={cloche}>🔔</span>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
