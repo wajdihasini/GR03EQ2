@@ -16,13 +16,14 @@ Dépôt des travaux dirigés de la 3ème année **Licence Informatique de Gestio
 | TD  | Sujet                                    | Technologies                   | Statut      |
 |-----|------------------------------------------|--------------------------------|-------------|
 | TD1 | Premiers composants React (Débuter avec React) | React, Bootstrap, Font Awesome | Terminé     |
-| TD2 | À venir                                  | –                              | À venir     |
+| CH2 | Event , State                                  | React, Bootstrap               | Terminé     |
+| TD2 | À venir                                        |                                     | À venir     |
 
 ## Mobile
 
 | TD  | Sujet | Statut  |
 |-----|-------|---------|
-| TD1 | –     | Terminé |
+| TD1 | PREMIER PAS FLUTTER     | Terminé |
 
 ---
 
