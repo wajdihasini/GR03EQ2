@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07090f">
+  <meta name="description" content="Portfolio de Mohamed Amine Albouchi, étudiant en informatique et développeur web. Compétences, projets, parcours et contact.">
+  <meta property="og:title" content="Mohamed Amine Albouchi — Développeur Web & Étudiant en informatique">
+  <meta property="og:description" content="Portfolio : compétences, projets, parcours et certifications.">
+  <meta property="og:type" content="website">
+  <title>Mohamed Amine Albouchi — Développeur Web & Étudiant en informatique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#07090f;--bg2:#0b0f19;--surface:#10151f;--surface2:#151c2a;--text:#eef2fb;--muted:#9aa7bd;--line:#1f2a3d;
+      --a:#4cc2ff;--b:#8b6cff;--c:#ff6bd6;--green:#4ade9b;--glass:rgba(16,21,31,.62);
+      --grad:linear-gradient(110deg,var(--a),var(--b) 55%,var(--c));
+      --shadow:0 24px 70px rgba(0,0,0,.45);--radius:18px;color-scheme:dark
+    }
+    [data-theme=light]{
+      --bg:#f6f8fc;--bg2:#eef2f9;--surface:#ffffff;--surface2:#f1f5fb;--text:#0e1524;--muted:#566177;--line:#dbe3f0;
+      --a:#0a84ff;--b:#6a4dff;--c:#e0399f;--green:#12a366;--glass:rgba(255,255,255,.7);
+      --shadow:0 20px 60px rgba(30,50,100,.14);color-scheme:light
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:84px}
+    body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;transition:background .35s,color .35s}
+    h1,h2,h3,.logo{font-family:"Space Grotesk",sans-serif;line-height:1.15;letter-spacing:-.03em}
+    a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;color:inherit}
+    button{cursor:pointer}
+    img{max-width:100%}
+    .container{width:min(1160px,92%);margin-inline:auto}
+    .gradient{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .muted{color:var(--muted)}
+    :focus-visible{outline:2px solid var(--a);outline-offset:3px;border-radius:6px}
+    .skip{position:absolute;left:-999px;top:8px;background:var(--a);color:#000;padding:8px 14px;border-radius:8px;z-index:200}.skip:focus{left:8px}
+
+    /* background layers */
+    #bg-canvas{position:fixed;inset:0;z-index:-2;width:100%;height:100%;opacity:.55}
+    .blobs{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:float 18s ease-in-out infinite}
+    .blob.one{width:520px;height:520px;background:var(--b);top:-120px;right:-80px}
+    .blob.two{width:460px;height:460px;background:var(--a);bottom:5%;left:-140px;animation-delay:-6s}
+    .blob.three{width:340px;height:340px;background:var(--c);top:45%;right:20%;opacity:.14;animation-delay:-11s}
+    [data-theme=light] .blob{opacity:.18}
+    @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-50px) scale(1.12)}}
+    .cursor-glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(110,120,255,.14),transparent 65%);transform:translate(-50%,-50%);transition:opacity .3s}
+    .progress-bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:100}
+
+    /* header */
+    .site-header{position:sticky;top:0;z-index:60;background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .logo{font-size:1.28rem;font-weight:700;display:flex;align-items:center;gap:10px}
+    .logo-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--grad);color:#fff;font-size:.82rem}
+    .nav-links{display:flex;gap:4px;align-items:center}
+    .nav-links a{font-size:.85rem;color:var(--muted);padding:8px 12px;border-radius:9px;transition:color .2s,background .2s}
+    .nav-links a:hover{color:var(--text);background:var(--surface2)}
+    .nav-links a.active{color:var(--text);background:var(--surface2)}
+    .nav-actions{display:flex;gap:8px;align-items:center}
+    .icon-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:var(--surface);transition:transform .2s,border-color .2s}
+    .icon-btn:hover{transform:translateY(-2px);border-color:var(--a)}
+    .icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .icon-btn svg.fill{fill:currentColor;stroke:none}
+    .menu-toggle{display:none}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 22px;border-radius:12px;border:1px solid var(--line);font-weight:600;font-size:.92rem;background:var(--surface);transition:transform .2s,box-shadow .2s,border-color .2s}
+    .btn:hover{transform:translateY(-3px);border-color:var(--a)}
+    .btn-primary{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 10px 30px rgba(110,100,255,.35)}
+    .btn-primary:hover{box-shadow:0 14px 40px rgba(110,100,255,.5)}
+    .btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+    /* hero */
+    .hero{padding:90px 0 70px;min-height:calc(100vh - 72px);display:flex;align-items:center}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+    .badge{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--line);background:var(--glass);border-radius:99px;font-size:.8rem;color:var(--muted);margin-bottom:24px;backdrop-filter:blur(8px)}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,155,.6)}70%{box-shadow:0 0 0 9px rgba(74,222,155,0)}100%{box-shadow:0 0 0 0 rgba(74,222,155,0)}}
+    h1{font-size:clamp(2.3rem,5vw,4rem);letter-spacing:-.06em;line-height:1.02;margin-bottom:18px}
+    .typed-line{font-family:"JetBrains Mono",monospace;font-size:clamp(1rem,2vw,1.25rem);color:var(--a);min-height:2em;margin-bottom:18px}
+    .caret{display:inline-block;width:2px;height:1.1em;background:var(--a);vertical-align:-.2em;margin-left:3px;animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .hero-description{max-width:560px;color:var(--muted);font-size:1.05rem}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0}
+    .socials{display:flex;gap:10px}
+    .stats{display:flex;gap:34px;margin-top:38px;padding-top:26px;border-top:1px solid var(--line);flex-wrap:wrap}
+    .stat strong{display:block;font-family:"Space Grotesk",sans-serif;font-size:2rem;letter-spacing:-.04em}
+    .stat small{color:var(--muted);font-size:.8rem}
+    .hero-visual{position:relative;max-width:410px;margin:auto;width:100%}
+    .portrait{position:relative;aspect-ratio:4/4.8;border-radius:28px;padding:10px;background:linear-gradient(150deg,var(--surface2),var(--surface));border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .15s;transform-style:preserve-3d}
+    .portrait:before{content:"";position:absolute;inset:-2px;border-radius:30px;background:var(--grad);z-index:-1;filter:blur(26px);opacity:.45}
+    .portrait img{width:100%;height:100%;object-fit:cover;border-radius:20px;display:block}
+    .portrait-fallback{display:none;height:100%;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;border-radius:20px;background:radial-gradient(circle at 50% 25%,rgba(76,194,255,.25),var(--surface) 70%);color:var(--muted)}
+    .portrait-fallback .avatar{font-size:4.6rem;margin-bottom:10px}
+    .float-card{position:absolute;display:flex;gap:11px;align-items:center;padding:12px 15px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);font-size:.8rem;animation:bob 6s ease-in-out infinite}
+    .float-card strong{display:block;font-size:.86rem}.float-card small{color:var(--muted)}
+    .float-card .fi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:700;font-size:.8rem}
+    .f1{top:10%;left:-50px}.f2{bottom:10%;right:-40px;animation-delay:-3s}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .scroll-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:.72rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px}
+    .mouse{width:20px;height:32px;border:2px solid var(--muted);border-radius:12px;position:relative}.mouse:after{content:"";position:absolute;top:6px;left:50%;width:3px;height:6px;margin-left:-1.5px;background:var(--muted);border-radius:3px;animation:wheel 1.8s infinite}
+    @keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
+
+    /* marquee */
+    .marquee{border-block:1px solid var(--line);overflow:hidden;background:var(--glass);padding:18px 0;backdrop-filter:blur(8px)}
+    .track{display:flex;gap:46px;width:max-content;animation:scroll 32s linear infinite}
+    .marquee:hover .track{animation-play-state:paused}
+    .track span{font-family:"Space Grotesk",sans-serif;font-weight:600;color:var(--muted);font-size:1.05rem;white-space:nowrap;display:flex;align-items:center;gap:46px}
+    .track span:after{content:"✦";color:var(--b);font-size:.8rem}
+    @keyframes scroll{to{transform:translateX(-50%)}}
+
+    /* sections */
+    .section{padding:100px 0;position:relative}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;color:var(--a)}
+    .eyebrow:before{content:"";width:24px;height:1px;background:var(--a)}
+    .section-head{margin-bottom:44px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+    .section-head h2{font-size:clamp(2rem,4.2vw,3.1rem);margin-top:12px}
+    .section-head p{color:var(--muted);max-width:560px;margin-top:10px}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:none}
+    .card{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:var(--radius);position:relative;overflow:hidden}
+    .spot:before{content:"";position:absolute;inset:0;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(120,130,255,.16),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+    .spot:hover:before{opacity:1}
+
+    /* about */
+    .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+    .about-grid h2{font-size:clamp(2rem,4vw,3rem);margin:12px 0 18px}
+    .about-grid p{color:var(--muted);margin-bottom:14px}
+    .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+    .fact{padding:15px;border-radius:14px}
+    .fact small{display:block;color:var(--muted);font-size:.74rem}.fact strong{font-size:.92rem}
+    .terminal{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#070b13;box-shadow:var(--shadow)}
+    .tbar{display:flex;gap:7px;align-items:center;padding:13px 16px;border-bottom:1px solid #1b2536;color:#8da0bd;font-size:.76rem;font-family:"JetBrains Mono",monospace}
+    .tbar i{width:10px;height:10px;border-radius:50%;background:#ff6b6b}.tbar i:nth-child(2){background:#ffd166}.tbar i:nth-child(3){background:#4ade9b}
+    .tcode{padding:24px;font:.86rem/1.95 "JetBrains Mono",monospace;color:#cbd8ee;min-height:300px}
+    .k{color:#b79cff}.s{color:#7ff0bb}.n{color:#7cc7ff}.c{color:#64748b}
+
+    /* skills */
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+    .tab{padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:.84rem;font-weight:500;transition:.2s}
+    .tab:hover{color:var(--text);border-color:var(--a)}
+    .tab.on{background:var(--grad);color:#fff;border-color:transparent}
+    .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .skill{padding:22px;transition:transform .25s,border-color .25s}
+    .skill:hover{transform:translateY(-6px);border-color:var(--b)}
+    .skill[hidden]{display:none}
+    .skill-top{display:flex;justify-content:space-between;align-items:center}
+    .sym{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:var(--surface2);border:1px solid var(--line);font-weight:700;color:var(--a)}
+    .skill h3{font-size:1.02rem;margin:14px 0 4px}.skill p{font-size:.8rem;color:var(--muted);min-height:44px}
+    .lv{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin:14px 0 7px}
+    .bar{height:5px;border-radius:9px;background:var(--surface2);overflow:hidden}
+    .bar span{display:block;height:100%;width:0;background:var(--grad);border-radius:9px;transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+
+    /* projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .project{transition:transform .25s,border-color .25s;cursor:pointer;display:flex;flex-direction:column}
+    .project:hover{transform:translateY(-7px);border-color:var(--a)}
+    .project[hidden]{display:none}
+    .p-art{height:190px;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,rgba(76,194,255,.15),rgba(139,108,255,.18))}
+    .p-art:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:var(--grad);filter:blur(70px);opacity:.35;transition:transform .5s}
+    .project:hover .p-art:before{transform:scale(1.3)}
+    .mock{position:relative;width:70%;padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .4s}
+    .project:hover .mock{transform:translateY(-6px) rotate(-2deg)}
+    .mock .d{display:flex;gap:4px;margin-bottom:11px}.mock .d i{width:6px;height:6px;border-radius:50%;background:var(--a)}
+    .mock .l{height:6px;border-radius:5px;background:var(--line);margin:7px 0}.mock .l.h{background:var(--b);width:55%}
+    .mock .g{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:12px}.mock .g span{height:26px;border-radius:5px;background:var(--surface2)}
+    .p-body{padding:22px;display:flex;flex-direction:column;flex:1}
+    .p-meta{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-bottom:9px;font-family:"JetBrains Mono",monospace}
+    .p-body h3{font-size:1.2rem;margin-bottom:8px}.p-body p{font-size:.88rem;color:var(--muted);flex:1}
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+    .tags span{font-size:.72rem;padding:4px 10px;border-radius:7px;background:var(--surface2);color:var(--a);border:1px solid var(--line)}
+    .p-links{display:flex;gap:16px;font-size:.84rem;font-weight:600;color:var(--a)}
+    .p-links a:hover{color:var(--text)}
+    dialog{border:1px solid var(--line);border-radius:22px;background:var(--surface);color:var(--text);width:min(620px,92%);padding:0;box-shadow:var(--shadow);margin:auto}
+    dialog::backdrop{background:rgba(3,6,12,.72);backdrop-filter:blur(6px)}
+    .modal-in{padding:34px;position:relative}
+    .modal-in h3{font-size:1.7rem;margin:6px 0 12px}.modal-in p{color:var(--muted)}
+    .modal-in ul{margin:16px 0 0 18px;color:var(--muted)}.modal-in li{margin:6px 0}
+    .modal-close{position:absolute;top:18px;right:18px}
+    dialog[open]{animation:pop .3s ease}
+    @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.97)}}
+
+    /* journey */
+    .journey-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+    .subhead{font-size:1.25rem;margin-bottom:22px}
+    .timeline{position:relative;padding-left:28px;display:grid;gap:18px}
+    .timeline:before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--a),var(--b),transparent)}
+    .t-item{padding:20px;position:relative}
+    .t-item:before{content:"";position:absolute;left:-30px;top:26px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--a)}
+    .t-item small{color:var(--a);font-size:.76rem;font-family:"JetBrains Mono",monospace}
+    .t-item h3{font-size:1.02rem;margin:5px 0}.t-item p{font-size:.86rem;color:var(--muted)}
+
+    /* certificates */
+    .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .cert{padding:20px;display:flex;gap:16px;align-items:center;transition:transform .25s,border-color .25s}
+    .cert:hover{transform:translateY(-4px);border-color:var(--b)}
+    .cert-ico{width:50px;height:50px;border-radius:14px;flex-shrink:0;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:700;font-size:.82rem}
+    .cert h3{font-size:.95rem}.cert p{font-size:.78rem;color:var(--muted)}.cert a{font-size:.78rem;color:var(--a)}
+
+    /* extras */
+    .extra-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+    .extra-grid h2{font-size:2rem;margin:12px 0 22px}
+    .langs{display:grid;gap:14px}.lang{padding:16px 18px}
+    .lang-top{display:flex;justify-content:space-between;margin-bottom:10px;gap:10px}.lang-top small{color:var(--muted)}
+    .interests{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .interest{padding:18px;display:flex;gap:12px;align-items:center;font-size:.9rem;transition:transform .25s}
+    .interest:hover{transform:translateY(-4px)}
+    .interest .ie{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface2);border:1px solid var(--line);font-size:1.05rem}
+
+    /* contact */
+    .contact-shell{display:grid;grid-template-columns:.9fr 1.1fr;gap:38px;padding:38px}
+    .contact-shell:after{content:"";position:absolute;width:340px;height:340px;right:-100px;top:-120px;background:var(--grad);filter:blur(100px);opacity:.18;pointer-events:none}
+    .contact-copy h2{font-size:clamp(1.9rem,3.6vw,2.7rem);margin:12px 0 14px}
+    .contact-copy>p{color:var(--muted)}
+    .c-list{display:grid;gap:12px;margin-top:26px}
+    .c-item{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:transform .2s,border-color .2s}
+    a.c-item:hover{transform:translateX(5px);border-color:var(--a)}
+    .c-item .icon-btn{flex-shrink:0}
+    .c-item small{display:block;color:var(--muted);font-size:.74rem}
+    .c-item span.val{font-size:.9rem;font-weight:500;word-break:break-all}
+    .copy{margin-left:auto;font-size:.74rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface2)}
+    .copy:hover{border-color:var(--a)}
+    form{position:relative;z-index:1}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+    .field label{font-size:.8rem;color:var(--muted)}
+    .field input,.field select,.field textarea{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:13px 14px;outline:none;transition:border-color .2s,box-shadow .2s}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--a);box-shadow:0 0 0 4px rgba(76,194,255,.13)}
+    .field textarea{min-height:140px;resize:vertical}
+    .counter{font-size:.72rem;color:var(--muted);text-align:right}
+    .hint{font-size:.76rem;color:var(--muted)}
+    .status{display:none;font-size:.84rem;color:var(--green)}
+
+    footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.84rem}
+    .foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .foot-links{display:flex;gap:10px}
+    .back-top{position:fixed;right:22px;bottom:22px;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(10px)}
+    .back-top.show{opacity:1;pointer-events:auto;transform:none}
+
+    @media(max-width:1000px){.hero-grid,.about-grid,.journey-grid,.extra-grid,.contact-shell{grid-template-columns:1fr}.skills-grid{grid-template-columns:repeat(3,1fr)}.projects-grid{grid-template-columns:repeat(2,1fr)}.hero-visual{order:-1;max-width:340px}.f1{left:-14px}.f2{right:-14px}.scroll-hint{display:none}.hero{min-height:auto}}
+    @media(max-width:820px){.menu-toggle{display:grid}.nav-links{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;padding:14px 4%;background:var(--bg2);border-bottom:1px solid var(--line)}.nav-links.open{display:flex}.nav-links a{padding:12px}.nav-actions .btn{display:none}}
+    @media(max-width:600px){.skills-grid,.projects-grid,.cert-grid,.facts,.interests,.form-grid{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr 1fr}.section{padding:70px 0}.contact-shell{padding:22px}.stats{gap:22px}.float-card{font-size:.7rem;padding:9px 11px}.f1{left:-6px}.f2{right:-6px}.form-grid .full{grid-column:auto}}
+    @media(max-width:600px){.logo{font-size:.92rem;gap:8px}.nav-actions>a.icon-btn{display:none}}
+    @media(max-width:420px){.skills-grid{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+    @media print{.site-header,.back-top,#bg-canvas,.blobs,.cursor-glow,.progress-bar{display:none}.reveal{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="progress-bar" id="progress"></div>
+<div class="blobs" aria-hidden="true"><div class="blob one"></div><div class="blob two"></div><div class="blob three"></div></div>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="cursor-glow" id="glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container" aria-label="Navigation principale">
+    <a class="logo" href="#accueil"><span class="logo-mark">MA</span><span class="logo-text">Mohamed Amine Albouchi</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#accueil" class="active">Accueil</a><a href="#apropos">À propos</a><a href="#competences">Compétences</a><a href="#projets">Projets</a><a href="#parcours">Parcours</a><a href="#certificats">Certificats</a><a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a class="icon-btn" href="https://github.com/amineakb789" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="fill" viewBox="0 0 24 24"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg></a>
+      <a class="icon-btn" href="https://www.linkedin.com/in/mohamed-amine-albouchi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="fill" viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.6V9h3.5v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg></a>
+      <button class="icon-btn" id="themeBtn" aria-label="Changer de thème" title="Thème clair / sombre"><svg id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="btn btn-primary" href="#contact">Discutons</a>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="accueil">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="badge"><span class="dot"></span> Disponible pour un stage · Tunisie</div>
+        <h1>Salut, moi c’est <span class="gradient">Mohamed Amine Albouchi</span>.</h1>
+        <div class="typed-line" aria-live="off"><span id="typed"></span><span class="caret"></span></div>
+        <p class="hero-description">Étudiant en informatique, je conçois des expériences web modernes, rapides et accessibles. J’apprends, je construis et je transforme mes idées en projets concrets.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projets">Voir mes projets <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a class="btn" href="CV-Mohamed-Amine-Albouchi.pdf" download>Télécharger mon CV <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg></a>
+        </div>
+        <div class="socials">
+          <a class="btn" href="https://github.com/amineakb789" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/mohamed-amine-albouchi/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong><span data-count="3">0</span>+</strong><small>Projets réalisés</small></div>
+          <div class="stat"><strong><span data-count="8">0</span></strong><small>Technologies</small></div>
+          <div class="stat"><strong><span data-count="3">0</span></strong><small>Langues parlées</small></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="portrait" id="tilt">
+          <!-- Placez votre photo à côté de index.html sous le nom profile.jpg -->
+          <img src="profile.jpg" alt="Portrait de Mohamed Amine Albouchi" onerror="this.style.display='none';document.getElementById('fb').style.display='flex'">
+          <div class="portrait-fallback" id="fb"><div class="avatar">👨🏻‍💻</div><strong>Votre photo ici</strong><small>Ajoutez profile.jpg à côté de index.html</small></div>
+        </div>
+        <div class="float-card f1"><span class="fi">UI</span><div><strong>Créativité & logique</strong><small>Du concept à l’interface</small></div></div>
+        <div class="float-card f2"><span class="fi">&lt;/&gt;</span><div><strong>Développement web</strong><small>HTML · CSS · JavaScript</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+
+  <section class="section" id="apropos">
+    <div class="container about-grid reveal">
+      <div>
+        <span class="eyebrow">Qui suis-je ?</span>
+        <h2>Un esprit curieux,<br><span class="gradient">une passion pour le web.</span></h2>
+        <p>Je suis <strong>Mohamed Amine Albouchi</strong>, étudiant en informatique. Je développe progressivement mes compétences en développement web et en conception d’interfaces. J’aime comprendre comment les choses fonctionnent et améliorer chaque projet étape par étape.</p>
+        <p>Mon objectif : créer des solutions numériques simples à utiliser, soignées visuellement et réellement utiles.</p>
+        <div class="facts">
+          <div class="fact card"><small>Localisation</small><strong>📍 Tunisie</strong></div>
+          <div class="fact card"><small>Statut</small><strong>🎓 Étudiant</strong></div>
+          <div class="fact card"><small>Domaine</small><strong>Développement web</strong></div>
+          <div class="fact card"><small>Langues</small><strong>Arabe · Français · Anglais</strong></div>
+        </div>
+        <a class="btn" href="CV-Mohamed-Amine-Albouchi.pdf" download>Télécharger mon CV <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg></a>
+      </div>
+      <div class="terminal">
+        <div class="tbar"><i></i><i></i><i></i><span style="margin-left:8px">mohamed-amine@portfolio:~</span></div>
+        <div class="tcode" id="tcode"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="competences">
+    <div class="container reveal">
+      <div class="section-head"><div><span class="eyebrow">Mon savoir-faire</span><h2>Compétences <span class="gradient">techniques</span></h2><p>Langages, bibliothèques et outils que j’utilise. Les niveaux sont indicatifs, ajustez-les selon votre expérience réelle.</p></div></div>
+      <div class="tabs" role="tablist" id="skillTabs">
+        <button class="tab on" data-f="all">Tout</button><button class="tab" data-f="front">Front-end</button><button class="tab" data-f="data">Données</button><button class="tab" data-f="tools">Outils</button><button class="tab" data-f="soft">Soft skills</button>
+      </div>
+      <div class="skills-grid">
+        <article class="skill card spot" data-g="front"><div class="skill-top"><span class="sym">5</span><span class="muted">01</span></div><h3>HTML5</h3><p>Structure sémantique et contenu accessible.</p><div class="lv"><span>Maîtrise</span><span>Avancé · 85%</span></div><div class="bar"><span data-w="85"></span></div></article>
+        <article class="skill card spot" data-g="front"><div class="skill-top"><span class="sym">3</span><span class="muted">02</span></div><h3>CSS3</h3><p>Mises en page responsive et interfaces soignées.</p><div class="lv"><span>Maîtrise</span><span>Avancé · 80%</span></div><div class="bar"><span data-w="80"></span></div></article>
+        <article class="skill card spot" data-g="front"><div class="skill-top"><span class="sym">JS</span><span class="muted">03</span></div><h3>JavaScript</h3><p>Interactions et comportements dynamiques.</p><div class="lv"><span>Maîtrise</span><span>Intermédiaire · 65%</span></div><div class="bar"><span data-w="65"></span></div></article>
+        <article class="skill card spot" data-g="front"><div class="skill-top"><span class="sym">⚛</span><span class="muted">04</span></div><h3>React</h3><p>Composants et interfaces réutilisables.</p><div class="lv"><span>Maîtrise</span><span>En progression · 55%</span></div><div class="bar"><span data-w="55"></span></div></article>
+        <article class="skill card spot" data-g="front"><div class="skill-top"><span class="sym">B</span><span class="muted">05</span></div><h3>Bootstrap</h3><p>Composants UI et mise en page rapide.</p><div class="lv"><span>Maîtrise</span><span>Intermédiaire · 68%</span></div><div class="bar"><span data-w="68"></span></div></article>
+        <article class="skill card spot" data-g="tools"><div class="skill-top"><span class="sym">Git</span><span class="muted">06</span></div><h3>Git & GitHub</h3><p>Versionnement et collaboration sur les projets.</p><div class="lv"><span>Maîtrise</span><span>Intermédiaire · 65%</span></div><div class="bar"><span data-w="65"></span></div></article>
+        <article class="skill card spot" data-g="data"><div class="skill-top"><span class="sym">DB</span><span class="muted">07</span></div><h3>SQL & bases de données</h3><p>Requêtes et gestion de données structurées.</p><div class="lv"><span>Maîtrise</span><span>Intermédiaire · 60%</span></div><div class="bar"><span data-w="60"></span></div></article>
+        <article class="skill card spot" data-g="soft"><div class="skill-top"><span class="sym">✧</span><span class="muted">08</span></div><h3>Soft skills</h3><p>Travail en équipe, curiosité et organisation.</p><div class="lv"><span>Maîtrise</span><span>En développement · 78%</span></div><div class="bar"><span data-w="78"></span></div></article>
+      </div>
+      <p class="muted" style="margin-top:22px;font-size:.82rem">Je continue d’apprendre à travers mes cours, mes exercices et mes projets personnels.</p>
+    </div>
+  </section>
+
+  <section class="section" id="projets">
+    <div class="container reveal">
+      <div class="section-head"><div><span class="eyebrow">Travaux sélectionnés</span><h2>Des idées devenues <span class="gradient">projets.</span></h2><p>Cliquez sur une carte pour voir les détails. Remplacez ces exemples par vos vrais projets et liens.</p></div><a class="btn" href="https://github.com/amineakb789" target="_blank" rel="noopener noreferrer">Voir tout sur GitHub ↗</a></div>
+      <div class="tabs" id="projTabs"><button class="tab on" data-f="all">Tous</button><button class="tab" data-f="web">Web</button><button class="tab" data-f="app">Applications</button><button class="tab" data-f="university">Universitaires</button></div>
+      <div class="projects-grid">
+        <article class="project card spot" data-c="web" data-id="shop" tabindex="0" role="button" aria-label="Détails du projet Site e-commerce">
+          <div class="p-art"><div class="mock"><div class="d"><i></i><i></i><i></i></div><div class="l h"></div><div class="l"></div><div class="g"><span></span><span></span><span></span></div></div></div>
+          <div class="p-body"><div class="p-meta"><span>01 / Site web</span><span>Exemple</span></div><h3>Site e-commerce</h3><p>Boutique en ligne avec présentation des produits, navigation claire et interface adaptée aux mobiles.</p><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div><div class="p-links"><span>Voir les détails →</span></div></div>
+        </article>
+        <article class="project card spot" data-c="app" data-id="todo" tabindex="0" role="button" aria-label="Détails du projet Gestionnaire de tâches">
+          <div class="p-art"><div class="mock"><div class="d"><i></i><i></i><i></i></div><div class="l" style="width:75%"></div><div class="l h"></div><div class="l" style="width:85%"></div><div class="l h"></div></div></div>
+          <div class="p-body"><div class="p-meta"><span>02 / Application</span><span>Exemple</span></div><h3>Gestionnaire de tâches</h3><p>Organisation des activités, visualisation des priorités et suivi de la progression.</p><div class="tags"><span>React</span><span>CSS</span><span>JavaScript</span></div><div class="p-links"><span>Voir les détails →</span></div></div>
+        </article>
+        <article class="project card spot" data-c="university" data-id="auction" tabindex="0" role="button" aria-label="Détails du projet Plateforme d’enchères artisanales">
+          <div class="p-art"><div class="mock"><div class="d"><i></i><i></i><i></i></div><div class="l h"></div><div class="l" style="width:88%"></div><div class="l" style="width:65%"></div><div class="g"><span></span><span></span><span></span></div></div></div>
+          <div class="p-body"><div class="p-meta"><span>03 / Université</span><span>Exemple</span></div><h3>Plateforme d’enchères artisanales</h3><p>Analyse et modélisation d’un système d’enchères en ligne dédié aux créations artisanales.</p><div class="tags"><span>Analyse</span><span>UML</span><span>Gestion de projet</span></div><div class="p-links"><span>Voir les détails →</span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <dialog id="modal" aria-labelledby="mTitle">
+    <div class="modal-in">
+      <button class="icon-btn modal-close" id="mClose" aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <span class="eyebrow" id="mCat"></span>
+      <h3 id="mTitle"></h3>
+      <p id="mDesc"></p>
+      <ul id="mList"></ul>
+      <div class="tags" id="mTags"></div>
+      <div class="p-links"><a href="https://github.com/amineakb789" target="_blank" rel="noopener noreferrer">Code source sur GitHub ↗</a></div>
+    </div>
+  </dialog>
+
+  <section class="section" id="parcours">
+    <div class="container reveal">
+      <div class="section-head"><div><span class="eyebrow">Formation & évolution</span><h2>Mon <span class="gradient">parcours</span></h2><p>Formation et expériences qui nourrissent mon évolution.</p></div></div>
+      <div class="journey-grid">
+        <div><h3 class="subhead">Formation</h3><div class="timeline">
+          <article class="t-item card"><small>En cours</small><h3>Licence en informatique</h3><p>Ajoutez le nom de votre université, votre spécialité et les matières importantes.</p></article>
+          <article class="t-item card"><small>Diplôme obtenu</small><h3>Baccalauréat en informatique</h3><p>Ajoutez le nom de votre lycée et l’année d’obtention.</p></article>
+        </div></div>
+        <div><h3 class="subhead">Expériences & activités</h3><div class="timeline">
+          <article class="t-item card"><small>Projets académiques</small><h3>Travail en équipe</h3><p>Collaboration sur des projets universitaires, organisation des tâches et présentations.</p></article>
+          <article class="t-item card"><small>Apprentissage continu</small><h3>Projets personnels</h3><p>Pratique des technologies web et amélioration progressive de mes réalisations.</p></article>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="certificats">
+    <div class="container reveal">
+      <div class="section-head"><div><span class="eyebrow">Apprentissage continu</span><h2>Certificats & <span class="gradient">formations</span></h2><p>Ajoutez uniquement les certificats réellement obtenus, avec leur organisme et lien de vérification.</p></div></div>
+      <div class="cert-grid">
+        <article class="cert card spot"><div class="cert-ico">HTML</div><div><h3>Responsive Web Design</h3><p>Organisme : à compléter</p><a href="#contact">Ajouter le lien du certificat ↗</a></div></article>
+        <article class="cert card spot"><div class="cert-ico">JS</div><div><h3>JavaScript</h3><p>Organisme : à compléter</p><a href="#contact">Ajouter le lien du certificat ↗</a></div></article>
+        <article class="cert card spot"><div class="cert-ico">DEV</div><div><h3>Développement Web</h3><p>Organisme : à compléter</p><a href="#contact">Ajouter le lien du certificat ↗</a></div></article>
+        <article class="cert card spot"><div class="cert-ico">Git</div><div><h3>Git & GitHub</h3><p>Organisme : à compléter</p><a href="#contact">Ajouter le lien du certificat ↗</a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="autres">
+    <div class="container extra-grid reveal">
+      <div><span class="eyebrow">Communication</span><h2>Mes <span class="gradient">langues</span></h2>
+        <div class="langs">
+          <div class="lang card"><div class="lang-top"><strong>🇹🇳 Arabe</strong><small>Langue maternelle</small></div><div class="bar"><span data-w="100"></span></div></div>
+          <div class="lang card"><div class="lang-top"><strong>🇫🇷 Français</strong><small>Niveau à préciser</small></div><div class="bar"><span data-w="75"></span></div></div>
+          <div class="lang card"><div class="lang-top"><strong>🇬🇧 Anglais</strong><small>Niveau à préciser</small></div><div class="bar"><span data-w="60"></span></div></div>
+        </div>
+      </div>
+      <div><span class="eyebrow">Au-delà du code</span><h2>Centres <span class="gradient">d’intérêt</span></h2>
+        <div class="interests">
+          <div class="interest card spot"><span class="ie">🌐</span>Technologies web</div>
+          <div class="interest card spot"><span class="ie">🎨</span>Design UI/UX</div>
+          <div class="interest card spot"><span class="ie">📚</span>Apprentissage continu</div>
+          <div class="interest card spot"><span class="ie">🤝</span>Travail en équipe</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container reveal">
+      <div class="contact-shell card">
+        <div class="contact-copy">
+          <span class="eyebrow">Entrons en contact</span>
+          <h2>Construisons quelque chose de <span class="gradient">génial.</span></h2>
+          <p>Une question, une idée de projet ou une opportunité de stage ? Envoyez-moi un message, je vous répondrai avec plaisir.</p>
+          <div class="c-list">
+            <div class="c-item"><span class="icon-btn"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg></span><div><small>Écrivez-moi</small><span class="val" id="mail">amine.albouchi.23@gmail.com</span></div><button class="copy" id="copyMail" type="button">Copier</button></div>
+            <a class="c-item" href="https://www.linkedin.com/in/mohamed-amine-albouchi/" target="_blank" rel="noopener noreferrer"><span class="icon-btn"><svg class="fill" viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.6V9h3.5v11.5z"/></svg></span><div><small>Retrouvez-moi sur</small><span class="val">LinkedIn ↗</span></div></a>
+            <a class="c-item" href="https://github.com/amineakb789" target="_blank" rel="noopener noreferrer"><span class="icon-btn"><svg class="fill" viewBox="0 0 24 24"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg></span><div><small>Mes dépôts de code</small><span class="val">GitHub ↗</span></div></a>
+            <div class="c-item"><span class="icon-btn"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><small>Localisation</small><span class="val">Tunisie</span></div></div>
+          </div>
+        </div>
+        <form id="contactForm" novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="name">Votre nom *</label><input id="name" name="name" autocomplete="name" placeholder="Nom complet" required></div>
+            <div class="field"><label for="email">Votre e-mail *</label><input id="email" name="email" type="email" autocomplete="email" placeholder="nom@exemple.com" required></div>
+            <div class="field full"><label for="subject">Sujet *</label><select id="subject" name="subject" required><option value="">Choisissez un sujet</option><option>Opportunité de stage</option><option>Projet web</option><option>Collaboration</option><option>Autre demande</option></select></div>
+            <div class="field full"><label for="message">Votre message *</label><textarea id="message" name="message" maxlength="1000" placeholder="Parlez-moi de votre idée..." required></textarea><div class="counter"><span id="cnt">0</span>/1000</div></div>
+            <div class="field full"><button class="btn btn-primary" type="submit">Préparer le message <svg viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+            <p class="hint full field">Le formulaire ouvre votre application e-mail avec le message pré-rempli. Pour un envoi direct, connectez un service comme Formspree.</p>
+            <p class="status full field" id="status" role="status"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <span>© <span id="year"></span> Mohamed Amine Albouchi. Conçu avec soin.</span>
+    <div class="foot-links">
+      <a class="icon-btn" href="https://github.com/amineakb789" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="fill" viewBox="0 0 24 24"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg></a>
+      <a class="icon-btn" href="https://www.linkedin.com/in/mohamed-amine-albouchi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="fill" viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.6V9h3.5v11.5z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<a class="icon-btn back-top" href="#accueil" id="backTop" aria-label="Retour en haut"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
+<script>
+(() => {
+  const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
+
+  /* Thème clair / sombre */
+  const root = document.documentElement, themeIcon = $('#themeIcon');
+  const moon = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  const sun = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  function applyTheme(t){ root.dataset.theme = t; themeIcon.innerHTML = t === 'dark' ? moon : sun; $('meta[name=theme-color]').content = t === 'dark' ? '#07090f' : '#f6f8fc'; }
+  applyTheme(store.get('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  $('#themeBtn').addEventListener('click', () => { const t = root.dataset.theme === 'dark' ? 'light' : 'dark'; applyTheme(t); store.set('theme', t); });
+
+  /* Menu mobile */
+  const nav = $('#navLinks'), tg = $('#menuToggle');
+  tg.addEventListener('click', () => tg.setAttribute('aria-expanded', nav.classList.toggle('open')));
+  $$('a', nav).forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); tg.setAttribute('aria-expanded', 'false'); }));
+
+  /* Effet machine à écrire */
+  const roles = ['Développeur Web', 'Étudiant en informatique', 'Intégrateur UI / UX', 'Passionné par React & JavaScript'];
+  const typed = $('#typed');
+  if (reduce) typed.textContent = roles[0];
+  else { let r = 0, i = 0, del = false;
+    (function tick(){
+      const w = roles[r];
+      typed.textContent = w.slice(0, i);
+      if (!del && i === w.length) { del = true; return setTimeout(tick, 1600); }
+      if (del && i === 0) { del = false; r = (r + 1) % roles.length; }
+      i += del ? -1 : 1;
+      setTimeout(tick, del ? 35 : 75);
+    })(); }
+
+  /* Bandeau technologies */
+  const techs = ['HTML5','CSS3','JavaScript','React','Bootstrap','Git','GitHub','SQL','UML','Responsive Design','UI / UX'];
+  const row = techs.map(t => `<span>${t}</span>`).join('');
+  $('#track').innerHTML = row + row;
+
+  /* Terminal animé */
+  const code = [
+    '<span class="k">const</span> profil = {',
+    '&nbsp; nom: <span class="s">"Mohamed Amine Albouchi"</span>,',
+    '&nbsp; domaine: <span class="s">"Développement web"</span>,',
+    '&nbsp; outils: [<span class="s">"HTML"</span>, <span class="s">"CSS"</span>, <span class="s">"JavaScript"</span>, <span class="s">"React"</span>],',
+    '&nbsp; github: <span class="s">"amineakb789"</span>,',
+    '&nbsp; disponible: <span class="n">true</span>',
+    '};', '',
+    '<span class="c">// La prochaine ligne ? Votre futur projet.</span>'
+  ];
+  const tcode = $('#tcode');
+  let tDone = false;
+  function runTerminal(){
+    if (tDone) return; tDone = true;
+    if (reduce) { tcode.innerHTML = code.join('<br>'); return; }
+    let n = 0; (function step(){ tcode.innerHTML = code.slice(0, ++n).join('<br>') + '<span class="caret"></span>'; if (n < code.length) setTimeout(step, 320); })();
+  }
+
+  /* Compteurs animés */
+  function count(el){
+    const target = +el.dataset.count; if (reduce) { el.textContent = target; return; }
+    let v = 0; const t = setInterval(() => { v++; el.textContent = v; if (v >= target) clearInterval(t); }, 260 / target * 3);
+  }
+
+  /* Apparition au scroll + barres de progression */
+  const fillBars = c => $$('.bar span[data-w]', c).forEach(b => b.style.width = b.dataset.w + '%');
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible'); fillBars(e.target);
+    if (e.target.querySelector('#tcode')) runTerminal();
+    io.unobserve(e.target);
+  }), { threshold: .12 });
+  $$('.reveal').forEach(el => io.observe(el));
+  const cio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { count(e.target); cio.unobserve(e.target); } }), { threshold: .6 });
+  $$('[data-count]').forEach(el => cio.observe(el));
+
+  /* Lien actif dans la navigation */
+  const links = $$('.nav-links a');
+  const sio = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-40% 0px -55% 0px' });
+  $$('main section[id]').forEach(s => sio.observe(s));
+
+  /* Barre de progression, retour en haut */
+  const prog = $('#progress'), back = $('#backTop');
+  addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+    back.classList.toggle('show', scrollY > 600);
+  }, { passive: true });
+
+  /* Lueur du curseur + effet spotlight des cartes */
+  const glow = $('#glow'), fine = matchMedia('(pointer: fine)').matches;
+  if (fine && !reduce) {
+    addEventListener('pointermove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; }, { passive: true });
+    document.addEventListener('pointermove', e => {
+      const c = e.target.closest && e.target.closest('.spot'); if (!c) return;
+      const r = c.getBoundingClientRect(); c.style.setProperty('--mx', e.clientX - r.left + 'px'); c.style.setProperty('--my', e.clientY - r.top + 'px');
+    }, { passive: true });
+    /* Inclinaison 3D du portrait */
+    const tilt = $('#tilt');
+    tilt.addEventListener('pointermove', e => {
+      const r = tilt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      tilt.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+    });
+    tilt.addEventListener('pointerleave', () => tilt.style.transform = '');
+  } else glow.style.display = 'none';
+
+  /* Onglets : compétences et projets */
+  function tabs(box, items, attr){
+    $$('.tab', box).forEach(b => b.addEventListener('click', () => {
+      $$('.tab', box).forEach(x => x.classList.toggle('on', x === b));
+      items.forEach(i => i.hidden = b.dataset.f !== 'all' && i.dataset[attr] !== b.dataset.f);
+    }));
+  }
+  tabs($('#skillTabs'), $$('.skill'), 'g');
+  tabs($('#projTabs'), $$('.project'), 'c');
+
+  /* Fenêtre détails projet */
+  const data = {
+    shop: { cat:'Site web', t:'Site e-commerce', d:'Concept de boutique en ligne axé sur une expérience d’achat fluide, du catalogue jusqu’au panier.', l:['Catalogue de produits avec filtres','Design responsive mobile-first','Panier interactif en JavaScript'], tags:['HTML','CSS','JavaScript'] },
+    todo: { cat:'Application', t:'Gestionnaire de tâches', d:'Application pour planifier, prioriser et suivre l’avancement de ses tâches au quotidien.', l:['Ajout, modification et suppression de tâches','Priorités et statuts','Interface en composants React'], tags:['React','CSS','JavaScript'] },
+    auction: { cat:'Projet universitaire', t:'Plateforme d’enchères artisanales', d:'Analyse et modélisation complètes d’un système d’enchères en ligne dédié aux créations artisanales.', l:['Analyse des besoins et acteurs','Diagrammes UML (cas d’utilisation, classes)','Planification et gestion de projet en équipe'], tags:['Analyse','UML','Gestion de projet'] }
+  };
+  const modal = $('#modal');
+  function openProject(id){
+    const p = data[id]; if (!p) return;
+    $('#mCat').textContent = p.cat; $('#mTitle').textContent = p.t; $('#mDesc').textContent = p.d;
+    $('#mList').innerHTML = p.l.map(x => `<li>${x}</li>`).join(''); $('#mTags').innerHTML = p.tags.map(x => `<span>${x}</span>`).join('');
+    modal.showModal();
+  }
+  $$('.project').forEach(c => {
+    c.addEventListener('click', () => openProject(c.dataset.id));
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProject(c.dataset.id); } });
+  });
+  $('#mClose').addEventListener('click', () => modal.close());
+  modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+
+  /* Formulaire */
+  const msg = $('#message'), cnt = $('#cnt'), status = $('#status');
+  msg.addEventListener('input', () => cnt.textContent = msg.value.length);
+  $('#copyMail').addEventListener('click', async e => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText($('#mail').textContent); b.textContent = 'Copié ✓'; } catch { b.textContent = 'Erreur'; }
+    setTimeout(() => b.textContent = 'Copier', 1800);
+  });
+  $('#contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.currentTarget, d = new FormData(f);
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    const subject = encodeURIComponent(`${d.get('subject')} — message de ${d.get('name')}`);
+    const body = encodeURIComponent(`Nom : ${d.get('name')}\nE-mail : ${d.get('email')}\n\n${d.get('message')}`);
+    status.style.display = 'block'; status.textContent = 'Votre application e-mail va s’ouvrir…';
+    location.href = `mailto:amine.albouchi.23@gmail.com?subject=${subject}&body=${body}`;
+  });
+
+  $('#year').textContent = new Date().getFullYear();
+
+  /* Fond animé : réseau de particules */
+  const cv = $('#bg-canvas'), ctx = cv.getContext('2d');
+  if (!reduce) {
+    let W, H, pts = [], dpr = Math.min(devicePixelRatio || 1, 2), mouse = { x: -999, y: -999 };
+    const size = () => { W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); pts = Array.from({ length: Math.min(70, Math.floor(W / 22)) }, () => ({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-.5)*.35, vy: (Math.random()-.5)*.35 })); };
+    size(); addEventListener('resize', size);
+    addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+    let run = true; document.addEventListener('visibilitychange', () => { run = !document.hidden; if (run) draw(); });
+    function draw(){
+      if (!run) return;
+      ctx.clearRect(0, 0, W, H);
+      const light = root.dataset.theme === 'light', col = light ? '90,100,200' : '140,160,255';
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i]; p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, 6.283); ctx.fillStyle = `rgba(${col},.7)`; ctx.fill();
+        for (let j = i + 1; j < pts.length; j++) {
+          const q = pts[j], dx = p.x - q.x, dy = p.y - q.y, dist = dx*dx + dy*dy;
+          if (dist < 18000) { ctx.strokeStyle = `rgba(${col},${.16 * (1 - dist / 18000)})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+        }
+        const mx = p.x - mouse.x, my = p.y - mouse.y, md = mx*mx + my*my;
+        if (md < 26000) { ctx.strokeStyle = `rgba(${col},${.3 * (1 - md / 26000)})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  } else cv.style.display = 'none';
+})();
+</script>
+</body>
+</html>
