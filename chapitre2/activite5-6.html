@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activités 5 et 6 - Événements</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <h3>Activité 5 : composant fonction</h3>
+  <div id="root"></div>
+  <div id="root2"></div>
+
+  <h3>Activité 6 : composant classe</h3>
+  <div id="root3"></div>
+  <div id="root4"></div>
+
+  <p><em>Ouvrir la console du navigateur (F12) puis cliquer sur les boutons.</em></p>
+
+  <script type="text/babel">
+    // ---------- Activité 5 : événements dans une fonction ----------
+
+    // Sans événement : rien ne se passe dans la console
+    function FunctionClickSans() {
+      return (
+        <div>
+          <button>cliquer ici (sans événement)</button>
+        </div>
+      );
+    }
+
+    // Avec événement : onClick (camelCase) + une FONCTION (pas un appel)
+    function FunctionClick() {
+      function clickHandler() {
+        console.log('Bouton cliqué');
+      }
+      return (
+        <div>
+          <button onClick={clickHandler}>cliquer ici (avec événement)</button>
+        </div>
+      );
+    }
+
+    // ---------- Activité 6 : événements dans une classe ----------
+
+    // Sans événement
+    class ClassClickSans extends React.Component {
+      render() {
+        return (
+          <div>
+            <button>Presser ici (sans événement)</button>
+          </div>
+        );
+      }
+    }
+
+    // Avec événement : le gestionnaire est une méthode de la classe
+    // (on n'écrit pas le mot-clé "function" dans une classe)
+    class ClassClick extends React.Component {
+      clickHandler() {
+        console.log('Bouton cliqué');
+      }
+      render() {
+        return (
+          <div>
+            <button onClick={this.clickHandler}>Presser ici (avec événement)</button>
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<FunctionClickSans />, document.getElementById('root'));
+    ReactDOM.render(<FunctionClick />, document.getElementById('root2'));
+    ReactDOM.render(<ClassClickSans />, document.getElementById('root3'));
+    ReactDOM.render(<ClassClick />, document.getElementById('root4'));
+  </script>
+</body>
+</html>
