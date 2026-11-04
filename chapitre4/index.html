@@ -1,64 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Application - Listes imbriquées</title>
-  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
-  <style>
-    body { font-family: Calibri, Arial, sans-serif; margin: 24px; }
-    ul.interne { list-style: circle; }
-    ul.interne li { margin-bottom: 4px; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application - Listes imbriquées</title>
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            margin: 24px;
+        }
+        
+        ul.interne {
+            list-style: circle;
+        }
+        
+        ul.interne li {
+            margin-bottom: 4px;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="root"></div>
-  <script type="text/babel">
-    /* Application : imbriquer deux listes.
-       - liste externe : tableau de listes, parcourue avec map(liste, index)
-         -> pas d'id stable pour une liste, on utilise l'index comme key
-       - liste interne : les utilisateurs, key = id stable de l'utilisateur */
-
-    const utilisateurs = [
-      { id: "01", nom: "Mohamed Tounsi",    email: "mohamed-tounsi@gmail.com",    tel: "22-555-163" },
-      { id: "02", nom: "Foulen Ben Foulen", email: "foulen.ben.foulen@gmail.com", tel: "55-555-106" },
-    ];
-
-    // Deux listes (ici identiques) à imbriquer
-    const listes = [utilisateurs, utilisateurs];
-
-    function ListeUtilisateurs({ liste }) {
-      return (
+    <div id="root"></div>
+    <script type="text/babel">
+        /* Nest two lists. The outer array has no stable list IDs, so use the index as its key. Each user has a stable ID for the inner list key. */
+        const users = [ { id: "01", name: "Mohamed Tounsi", email: "mohamed-tounsi@gmail.com", phone: "22-555-163" }, { id: "02", name: "Foulen Ben Foulen", email: "foulen.ben.foulen@gmail.com", phone: "55-555-106" }, { id: "03", name: "Wajdi Hasini", email: "wajdi.hasini@gmail.com", phone: "" }, { id: "04", name: "Amine Albouchi", email: "amine.albouchi@gmail.com", phone: "" }, { id: "05", name: "Ahmed Hlehli", email: "ahmed.hlehli@gmail.com", phone: "" }, { id: "06", name: "Samir Loussif", email: "samir.loussif@gmail.com", phone: "" }, ]; // Two lists (identical in this example) to nest.
+        const lists = [users, users]; function UserList({ list }) { return (
         <ul className="interne">
-          {liste.map((u) => (
-            <li key={u.id}>
-              {u.id}
-              <br />{u.nom}
-              <br />{u.email}
-              <br />{u.tel}
+            {list.map((user) => (
+            <li key={user.id}>
+                {user.id}
+                <br />{user.name}
+                <br />{user.email}
+                <br />{user.phone}
             </li>
-          ))}
+            ))}
         </ul>
-      );
-    }
-
-    function App() {
-      return (
+        ); } function App() { return (
         <div>
-          {listes.map((liste, index) => (
+            {lists.map((list, index) => (
             <div key={index}>
-              <h2>Liste num {index}</h2>
-              <ListeUtilisateurs liste={liste} />
+                <h2>List number {index}</h2>
+                <UserList list={list} />
             </div>
-          ))}
+            ))}
         </div>
-      );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
+        ); } const root = ReactDOM.createRoot(document.getElementById("root")); root.render(
+        <App />);
+    </script>
 </body>
+
 </html>
