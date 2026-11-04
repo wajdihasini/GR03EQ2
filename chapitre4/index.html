@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application - Listes imbriquées</title>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 24px; }
+    ul.interne { list-style: circle; }
+    ul.interne li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    /* Application : imbriquer deux listes.
+       - liste externe : tableau de listes, parcourue avec map(liste, index)
+         -> pas d'id stable pour une liste, on utilise l'index comme key
+       - liste interne : les utilisateurs, key = id stable de l'utilisateur */
+
+    const utilisateurs = [
+      { id: "01", nom: "Mohamed Tounsi",    email: "mohamed-tounsi@gmail.com",    tel: "22-555-163" },
+      { id: "02", nom: "Foulen Ben Foulen", email: "foulen.ben.foulen@gmail.com", tel: "55-555-106" },
+    ];
+
+    // Deux listes (ici identiques) à imbriquer
+    const listes = [utilisateurs, utilisateurs];
+
+    function ListeUtilisateurs({ liste }) {
+      return (
+        <ul className="interne">
+          {liste.map((u) => (
+            <li key={u.id}>
+              {u.id}
+              <br />{u.nom}
+              <br />{u.email}
+              <br />{u.tel}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          {listes.map((liste, index) => (
+            <div key={index}>
+              <h2>Liste num {index}</h2>
+              <ListeUtilisateurs liste={liste} />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>

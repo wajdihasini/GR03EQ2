@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activité 2 - Liste de films</title>
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            margin: 24px;
+        }
+        
+        li {
+            margin: 6px 0;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        /* Activité 2 : afficher la liste des films, chaque film a son propre identifiant. Constatations : - on itère sur le tableau avec map() - on retourne un
+        <li> pour chaque élément - la key (= id du film) donne une identité stable à chaque élément : React repère ainsi ceux qui ont changé, été ajoutés ou supprimés. */ const films = [ { id: 1, titre: "Fausse note" }, { id: 2, titre: "l'Enfant du soleil"
+            }, { id: 3, titre: "El Jaida" }, { id: 4, titre: "Dachra" }, { id: 5, titre: "Porto Farina" }, ]; function App() { const listeFilms = films.map((film) => (
+            <li key={film.id}>{film.titre}</li>
+            )); return (
+            <div>
+                <h1>Liste des films</h1>
+                <ul>{listeFilms}</ul>
+            </div>
+            ); } const root = ReactDOM.createRoot(document.getElementById("root")); root.render(
+            <App />);
+    </script>
+</body>
+
+</html>

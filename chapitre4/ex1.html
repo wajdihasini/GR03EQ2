@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activité 1 - Liste de fruits</title>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 24px; }
+    ul.fruits { list-style: none; display: flex; gap: 16px; padding: 0; flex-wrap: wrap; }
+    ul.fruits li { text-align: center; border: 2px solid #4f81bd; border-radius: 12px; padding: 12px 20px; width: 120px; }
+    .emoji { font-size: 56px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    /* Activité 1 : afficher la liste de fruits à partir du tableau Fruits.
+       - map() crée un <li> pour chaque fruit
+       - chaque <li> reçoit une clé (key) stable = l'id du fruit
+       Inspecter (F12 > Console) : sans key, React affiche l'avertissement
+       "Each child in a list should have a unique key prop". */
+
+    const Fruits = [
+      { id: 1, nom: "Pomme",    emoji: "🍏" },
+      { id: 2, nom: "Orange",   emoji: "🍊" },
+      { id: 3, nom: "Pastèque", emoji: "🍉" },
+      { id: 4, nom: "Raisin",   emoji: "🍇" },
+      { id: 5, nom: "Cerises",  emoji: "🍒" },
+      { id: 6, nom: "Ananas",   emoji: "🍍" },
+      { id: 7, nom: "Fraise",   emoji: "🍓" },
+      { id: 8, nom: "Poire",    emoji: "🍐" },
+    ];
+
+    function App() {
+      const listeFruits = Fruits.map((fruit) => (
+        <li key={fruit.id}>
+          <div className="emoji">{fruit.emoji}</div>
+          <strong>{fruit.nom}</strong>
+        </li>
+      ));
+      return (
+        <div>
+          <h1>Liste de fruits</h1>
+          <ul className="fruits">{listeFruits}</ul>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>

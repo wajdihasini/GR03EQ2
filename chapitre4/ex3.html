@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activité 3 - Liste des utilisateurs</title>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 24px; }
+    li { margin-bottom: 8px; }
+    li p { margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    /* Activité 3 : afficher la liste des utilisateurs (liste d'objets).
+       Constatation : même principe d'affichage de liste avec clé. */
+
+    const utilisateurs = [
+      { id: 1, nom: "Mohamed Tounsi",    email: "mohamed-tounsi@gmail.com",    tel: "22-555-163" },
+      { id: 2, nom: "Foulen Ben Foulen", email: "foulen.ben.foulen@gmail.com", tel: "55-555-106" },
+    ];
+
+    function App() {
+      const listeUtilisateurs = utilisateurs.map((u) => (
+        <li key={u.id}>
+          {u.nom}
+          <p>{u.email}</p>
+          <p>{u.tel}</p>
+        </li>
+      ));
+      return (
+        <div>
+          <h1>Liste des utilisateurs</h1>
+          <ul>{listeUtilisateurs}</ul>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
