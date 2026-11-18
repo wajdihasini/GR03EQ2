@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+function Activite1() {
+  const [nom, setNom] = useState('');
+  const [affichageNom, setAffichageNom] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Empêche le rechargement de la page
+    setAffichageNom(nom);
+    alert(`Nom_complet: ${nom}`);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: '20px' }}>
+      <h2>Activité 1 : Input</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nom complet: {' '}
+          <input 
+            type="text" 
+            value={nom} 
+            onChange={(e) => setNom(e.target.value)} 
+            placeholder="Veuillez saisir votre nom complet"
+          />
+        </label>
+        <button type="submit">Afficher</button>
+      </form>
+
+      {affichageNom && (
+        <p>Nom complet: {affichageNom}</p>
+      )}
     </div>
   );
 }
 
-export default App;
+export default Activite1;
